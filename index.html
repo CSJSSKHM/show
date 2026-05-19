@@ -25,7 +25,7 @@
                     <th>排名</th>
                     <th>班別</th>
                     <th>學號</th>
-                    <th>勝率</th>
+                    <th>調整勝率</th>
                     <th>淨勝分</th>
                     <th>完成場數</th>
                 </tr>
@@ -34,6 +34,11 @@
                 <tr><td colspan="6">系統啟動中，等待數據傳入...</td></tr>
             </tbody>
         </table>
+
+        <div class="info-box">
+            <span style="color:#64ffda;">📊 調整勝率說明：</span>
+            <span style="color:#8892b0;">採用 Wilson Score（95% 置信區間下限）。場數愈少，分數愈保守；場數愈多，分數愈貼近真實勝率。鼠標移上勝率可查看真實勝率。</span>
+        </div>
 
         <div class="pending-box">
             <div class="pending-title">⏳ 挑戰者準備區 (需滿 3 場方可進入正式榜)</div>
