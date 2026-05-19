@@ -27,13 +27,25 @@ function processData(rawData) {
     document.getElementById('error-msg').style.display = 'none';
 
     // 處理與計算數據
+    // Wilson Score 下限（95% 置信區間）：場數少的人不確定性高，分數自動被壓低
+    function wilsonScore(wins, matches) {
+        if (matches === 0) return 0;
+        const z = 1.96;
+        const p = wins / matches;
+        const n = matches;
+        const num = p + z*z/(2*n) - z * Math.sqrt(p*(1-p)/n + z*z/(4*n*n));
+        const den = 1 + z*z/n;
+        return Math.max(0, num / den);
+    }
+
     let players = rawData.map(p => {
         let winRate = p.matches > 0 ? (p.wins / p.matches * 100).toFixed(1) : 0;
-        return { ...p, winRate: parseFloat(winRate) };
+        let adjWinRate = (wilsonScore(p.wins, p.matches) * 100).toFixed(1);
+        return { ...p, winRate: parseFloat(winRate), adjWinRate: parseFloat(adjWinRate) };
     });
 
-    // 排序：勝率優先，淨勝分次之
-    players.sort((a, b) => b.winRate - a.winRate || b.netScore - a.netScore);
+    // 排序：Wilson Score 優先，淨勝分次之
+    players.sort((a, b) => b.adjWinRate - a.adjWinRate || b.netScore - a.netScore);
 
     allRankedPlayers = players.filter(p => p.matches >= 3);
     const pending = players.filter(p => p.matches < 3 && p.matches > 0);
@@ -80,7 +92,7 @@ function renderCurrentPage() {
             <td>${actualRank === 1 ? '👑 1' : actualRank}</td>
             <td>${p.class}</td>
             <td>${p.no}</td>
-            <td class="win-rate">${p.winRate}%</td>
+            <td class="win-rate" title="真實勝率: ${p.winRate}%">${p.adjWinRate}%</td>
             <td>${p.netScore > 0 ? '+' + p.netScore : p.netScore}</td>
             <td>${p.matches}</td>
         </tr>`;
