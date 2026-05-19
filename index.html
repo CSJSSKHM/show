@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <title>爆旋陀螺大賽 - 實況排行榜</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="overflow: hidden;"> <div class="container">
+        <h1>BEYBLADE ARENA</h1>
+        <div class="subtitle">校園爆旋陀螺大賽 - 輪播實況</div>
+        <div id="error-msg"></div>
+
+        <div class="header-bar">
+            <div class="status-text" id="status">正在建立安全連線...</div>
+            <div class="page-indicator" id="pageText">頁面 1 / 1</div>
+        </div>
+
+        <div class="progress-bg">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>排名</th>
+                    <th>班別</th>
+                    <th>學號</th>
+                    <th>勝率</th>
+                    <th>淨勝分</th>
+                    <th>完成場數</th>
+                </tr>
+            </thead>
+            <tbody id="rankingBody">
+                <tr><td colspan="6">系統啟動中，等待數據傳入...</td></tr>
+            </tbody>
+        </table>
+
+        <div class="pending-box">
+            <div class="pending-title">⏳ 挑戰者準備區 (需滿 3 場方可進入正式榜)</div>
+            <div id="pendingList" style="color: #64ffda;">資料讀取中...</div>
+        </div>
+    </div>
+    
+    <script src="display.js"></script>
+</body>
+</html>
